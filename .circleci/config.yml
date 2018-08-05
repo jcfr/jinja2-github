@@ -1,0 +1,132 @@
+version: 2
+
+references:
+
+  ci_steps: &ci_steps
+    working_directory: /work
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            MANYLINUX_PYTHON=$(echo ${CIRCLE_JOB} | cut -d"_" -f2)
+            echo "MANYLINUX_PYTHON [${MANYLINUX_PYTHON}]"
+            export PATH=/opt/python/${MANYLINUX_PYTHON}/bin:${PATH}
+
+            pip install -r requirements.txt -r requirements-dev.txt
+      - run:
+          name: Run Tests
+          command: |
+            MANYLINUX_PYTHON=$(echo ${CIRCLE_JOB} | cut -d"_" -f2)
+            export PATH=/opt/python/${MANYLINUX_PYTHON}/bin:${PATH}
+
+            pytest
+      - run:
+          name: Build sdist and wheel
+          command: |
+            MANYLINUX_PYTHON=$(echo ${CIRCLE_JOB} | cut -d"_" -f2)
+            export PATH=/opt/python/${MANYLINUX_PYTHON}/bin:${PATH}
+
+            flit build
+
+            # Set PUBLISH variable
+            PUBLISH=$(echo ${CIRCLE_JOB} | cut -d"_" -f3)
+            echo "PUBLISH [${PUBLISH}]"
+
+            # If not publishing, delete distributions
+            if [[ ${PUBLISH} == "" ]]; then
+              rm dist/*
+            fi
+
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - dist
+
+  x64_build_job: &x64_build_job
+    docker:
+      - image: dockcross/manylinux-x64
+    <<: *ci_steps
+
+  no_filters: &no_filters
+    filters:
+      tags:
+        only: /.*/
+
+jobs:
+
+  # x64
+  manylinux-x64_cp34-cp34m:
+    <<: *x64_build_job
+  manylinux-x64_cp35-cp35m:
+    <<: *x64_build_job
+  manylinux-x64_cp36-cp36m:
+    <<: *x64_build_job
+  manylinux-x64_cp37-cp37m_publish:
+    <<: *x64_build_job
+
+  deploy-master:
+    docker:
+      - image: circleci/python:3.7.0-stretch
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - run:
+          name: Deploy master
+          command: |
+            echo "Deploy master (not implemented)"
+
+  deploy-release:
+    docker:
+      - image: circleci/python:3.7.0-stretch
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./
+      - run:
+          name: Deploy release
+          command: |
+            echo "Deploy release"
+            python -m venv ../venv
+            . ../venv/bin/activate
+            pip install twine
+            ls dist
+            twine upload -u $PYPI_USER -p $PYPI_PASSWORD --skip-existing dist/*
+
+workflows:
+  version: 2
+  build-test-deploy:
+    jobs:
+      # x64
+      - manylinux-x64_cp34-cp34m:
+          <<: *no_filters
+      - manylinux-x64_cp35-cp35m:
+          <<: *no_filters
+      - manylinux-x64_cp36-cp36m:
+          <<: *no_filters
+      - manylinux-x64_cp37-cp37m_publish:
+          <<: *no_filters
+
+      - deploy-master:
+          requires:
+            # x64
+            - manylinux-x64_cp34-cp34m
+            - manylinux-x64_cp35-cp35m
+            - manylinux-x64_cp36-cp36m
+            - manylinux-x64_cp37-cp37m_publish
+          filters:
+            branches:
+              only: master
+      - deploy-release:
+          requires:
+            # x64
+            - manylinux-x64_cp34-cp34m
+            - manylinux-x64_cp35-cp35m
+            - manylinux-x64_cp36-cp36m
+            - manylinux-x64_cp37-cp37m_publish
+          filters:
+            tags:
+              only: /^[0-9]+(\.[0-9]+)*(\.post[0-9]+)?$/
+            branches:
+              ignore: /.*/

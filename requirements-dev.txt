@@ -1,2 +1,3 @@
+flit
 pytest
 pytest-sugar
