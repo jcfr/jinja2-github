@@ -2,7 +2,7 @@
 
 """Jinja2 Extension for rendering GitHub project properties"""
 
-__version__ = '0.1.0'
+__version__ = '0.1.1'
 
 from github import Github
 from jinja2 import nodes
