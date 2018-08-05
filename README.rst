@@ -11,6 +11,8 @@ Available extensions are the following:
 
 * ``github_repo_description``: render the description of a GitHub project.
 
+.. image:: https://circleci.com/gh/jcfr/jinja2-github.svg?style=shield
+   :target: https://circleci.com/gh/jcfr/jinja2-github
 
 Installation
 ------------
