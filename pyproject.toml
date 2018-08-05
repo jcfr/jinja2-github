@@ -6,6 +6,7 @@ build-backend = "flit.buildapi"
 module = "jinja2_github"
 author = "Jean-Christophe Fillion-Robin"
 author-email = "jchris.fillionr@kitware.com"
+description-file = "README.rst"
 home-page = "https://github.com/jcfr/jinja2-github"
 requires = [
     "pygithub",
