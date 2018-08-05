@@ -22,7 +22,6 @@ Installation
 It will automatically install `jinja2`_ along with `pygithub`_.
 
 .. _`jinja2`: https://github.com/pallets/jinja
-.. _`PyPI`: https://pypi.python.org/pypi
 .. _`pygithub`: https://pypi.org/project/PyGithub/
 .. _`pip`: https://pypi.python.org/pypi/pip/
 
