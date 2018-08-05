@@ -65,4 +65,3 @@ class GitHubRepoDescriptionExtension(Extension):
               lineno=lineno,
           )
         return nodes.Output([call_method], lineno=lineno)
-
