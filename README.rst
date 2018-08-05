@@ -88,6 +88,85 @@ If you encounter any problems, please `file an issue`_ along with a detailed des
 .. _`file an issue`: https://github.com/jcfr/jinja2-github/issues
 
 
+
+Maintainer: Making a release
+----------------------------
+
+1. Make sure that all CI tests are passing on `CircleCI`_.
+
+
+2. List all tags sorted by version
+
+  .. code::
+
+    $ git tag -l | sort -V
+
+
+3. Choose the next release version number
+
+  .. code::
+
+    $ release=X.Y.Z
+
+  .. warning::
+
+      To ensure the packages are uploaded on `PyPI`_, tags must match this regular
+      expression: ``^[0-9]+(\.[0-9]+)*(\.post[0-9]+)?$``.
+
+4. Download latest sources
+
+  .. code::
+
+    $ cd /tmp && \
+      git clone git@github.com:jcfr/jinja2-github && \
+      cd jinja2-github
+
+5. Update ``__version__`` in ``jinja2_github.py`` script.
+
+  .. code::
+
+    $ sed -i "5s/.*/__version__ = '$release'/" jinja2_github.py
+
+6. Commit and push the changes
+
+  .. code::
+
+    $ git add jinja2_github.py
+    $ git commit -m "jinja2-github $release"
+    $ git push origin master
+
+7. Tag the release
+
+  .. code::
+
+    $ git tag --sign -m "jinja2-github ${release}" ${release} origin/master
+
+  .. note::
+
+      We recommend using a `GPG signing key <https://help.github.com/articles/generating-a-new-gpg-key/>`_
+      to sign the tag.
+
+8. Publish the release tag
+
+  .. code::
+
+    $ git push origin ${release}
+
+  .. important::
+
+      This will trigger builds on each CI services and automatically upload the wheels
+      and source distribution on `PyPI`_.
+
+9. Check the status of the builds on `CircleCI`_.
+
+
+10. Once the builds are completed, check that the distributions are available on `PyPI`_
+
+.. _CircleCI: https://circleci.com/gh/jcfr/jinja2-github
+
+.. _PyPI: https://pypi.org/project/jinja2_github
+
+
 Code of Conduct
 ---------------
 
