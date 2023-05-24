@@ -9,7 +9,7 @@ def test_github_repo_branch_sha():
         "{% github_repo_branch_sha 'jcfr/jinja2-github' %}"
     )
 
-    assert template.render() != ""
+    assert template.render()
 
     template = environment.from_string(
         "{% github_repo_branch_sha 'jcfr/jinja2-github', 'test-branch' %}"
