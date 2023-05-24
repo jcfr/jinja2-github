@@ -3,7 +3,7 @@ from jinja2 import Environment
 
 
 def test_github_repo_branch_sha():
-    environment = Environment(extensions=['jinja2_github.GitHubRepoBranchShaExtension'])
+    environment = Environment(extensions=['jinja2_github.GitHubRepoBranchShaExtension'], autoescape=True)
 
     template = environment.from_string(
         "{% github_repo_branch_sha 'jcfr/jinja2-github' %}"
@@ -19,7 +19,7 @@ def test_github_repo_branch_sha():
 
 
 def test_github_repo_description():
-    environment = Environment(extensions=['jinja2_github.GitHubRepoDescriptionExtension'])
+    environment = Environment(extensions=['jinja2_github.GitHubRepoDescriptionExtension'], autoescape=True)
 
     template = environment.from_string(
         "{% github_repo_description 'jcfr/jinja2-github' %}"
