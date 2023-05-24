@@ -11,8 +11,8 @@ Available extensions are the following:
 
 * ``github_repo_description``: render the description of a GitHub project.
 
-.. image:: https://circleci.com/gh/jcfr/jinja2-github.svg?style=shield
-   :target: https://circleci.com/gh/jcfr/jinja2-github
+.. image:: https://github.com/jcfr/jinja2-github/actions/workflows/ci.yml/badge.svg
+   :target: https://github.com/jcfr/jinja2-github/actions/workflows/ci.yml
 
 Installation
 ------------
@@ -93,7 +93,7 @@ If you encounter any problems, please `file an issue`_ along with a detailed des
 Maintainer: Making a release
 ----------------------------
 
-1. Make sure that all CI tests are passing on `CircleCI`_.
+1. Make sure that all CI tests are passing on `GitHub Actions`_.
 
 
 2. List all tags sorted by version
@@ -158,12 +158,12 @@ Maintainer: Making a release
       This will trigger builds on each CI services and automatically upload the wheels
       and source distribution on `PyPI`_.
 
-9. Check the status of the builds on `CircleCI`_.
+9. Check the status of the builds on `GitHub Actions`_.
 
 
 10. Once the builds are completed, check that the distributions are available on `PyPI`_
 
-.. _CircleCI: https://circleci.com/gh/jcfr/jinja2-github
+.. _GitHub Actions: https://github.com/jcfr/jinja2-github/actions
 
 .. _PyPI: https://pypi.org/project/jinja2_github
 
