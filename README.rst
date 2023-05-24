@@ -187,4 +187,3 @@ Distributed under the terms of the `Apache 2.0`_ license, jinja2-github is free 
    :target: https://opensource.org/
 
 .. _`Apache 2.0`: https://opensource.org/licenses/Apache-2.0
-

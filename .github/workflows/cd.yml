@@ -38,4 +38,3 @@ jobs:
           path: dist
 
       - uses: pypa/gh-action-pypi-publish@a56da0b891b3dc519c7ee3284aff1fad93cc8598 # v1.8.6
-
