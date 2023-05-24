@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 
 """Jinja2 Extension for rendering GitHub project properties"""
 
@@ -12,10 +11,10 @@ from jinja2.ext import Extension
 class GitHubRepoBranchShaExtension(Extension):
     """A jinja2 extension for rendering the last commit SHA of a GitHub project branch.
     """
-    tags = set(['github_repo_branch_sha'])
+    tags = {'github_repo_branch_sha'}
 
     def __init__(self, environment):
-        super(GitHubRepoBranchShaExtension, self).__init__(environment)
+        super().__init__(environment)
 
         # add the defaults to the environment
         environment.extend(repo_branch='master')
@@ -46,10 +45,10 @@ class GitHubRepoBranchShaExtension(Extension):
 class GitHubRepoDescriptionExtension(Extension):
     """A jinja2 extension for rendering GitHub project description.
     """
-    tags = set(['github_repo_description'])
+    tags = {'github_repo_description'}
 
     def __init__(self, environment):
-        super(GitHubRepoDescriptionExtension, self).__init__(environment)
+        super().__init__(environment)
 
     def _description(self, repo):
         return Github().get_repo(repo).description
