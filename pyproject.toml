@@ -22,3 +22,8 @@ classifiers = [
     "Topic :: Software Development :: Version Control :: Git"
 ]
 
+[tool.flit.metadata.requires-extra]
+test = [
+    "pytest",
+    "pytest-sugar",
+]
