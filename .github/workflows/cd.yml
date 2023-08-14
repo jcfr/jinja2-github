@@ -37,4 +37,4 @@ jobs:
           name: artifact
           path: dist
 
-      - uses: pypa/gh-action-pypi-publish@f5622bde02b04381239da3573277701ceca8f6a0 # v1.8.7
+      - uses: pypa/gh-action-pypi-publish@b7f401de30cb6434a1e19f805ff006643653240e # v1.8.10
